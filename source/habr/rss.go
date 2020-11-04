@@ -6,8 +6,8 @@ import (
 	"newsparser/source/models"
 )
 
-func ParseRSSByPageIndex(index int) []models.HabrPost {
-	var posts []models.HabrPost
+func ParseRSSByPageIndex(index int) []models.Post {
+	var posts []models.Post
 
 	fp := gofeed.NewParser()
 	url := fmt.Sprintf("https://habr.com/ru/rss/all/all/page%d/", index)
@@ -21,11 +21,12 @@ func ParseRSSByPageIndex(index int) []models.HabrPost {
 	feedItems := feed.Items
 
 	for _, item := range feedItems {
-		post := models.HabrPost{
+
+		post := models.Post{
 			Title:       item.Title,
 			Description: item.Description,
 			Link:        item.Link,
-			ImgUrl:      item.Image.URL,
+			ImgUrl:      "item.Image && item.Image.URL",
 			Published:   item.Published,
 			Categories:  item.Categories,
 		}

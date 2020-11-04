@@ -43,7 +43,7 @@ func updateOutput(post *goquery.Selection, output *[]models.Post) {
 	img, _ := post.Find("img").Attr("src")
 	link, _ := postMeta.Attr("href")
 
-	postData := models.Post{Title: title, Link: link, Img: img, Description: description}
+	postData := models.Post{Title: title, Link: link, ImgUrl: img, Description: description}
 	*output = append(*output, postData)
 }
 
