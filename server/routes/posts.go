@@ -60,7 +60,8 @@ func getHabrPostsByRss(pages int, subjects []string) []byte {
 		postsCollection = append(postsCollection, posts...)
 	}
 
-	// Todo вынести сортировку статей в парсинг (ParseAndFilterRss)
+	// Todo (!) вынести сортировку статей в парсинг (ParseAndFilterRss)
+	// Todo (!) добавить ограничение на кол-во статей в 20 штук (останавливать запросы если уже достаточно статей)
 	var output []models.Post
 	for _, post := range postsCollection {
 		for _, subject := range subjects {
