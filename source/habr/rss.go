@@ -2,8 +2,11 @@ package habr
 
 import (
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/mmcdole/gofeed"
+	"log"
 	"newsparser/source/models"
+	"strings"
 )
 
 func ParseRSSByPageIndex(index int) []models.Post {
@@ -24,7 +27,7 @@ func ParseRSSByPageIndex(index int) []models.Post {
 
 		post := models.Post{
 			Title:       item.Title,
-			Description: item.Description,
+			Description: setBlankToLinks(item.Description),
 			Link:        item.Link,
 			ImgUrl:      "item.Image && item.Image.URL",
 			Published:   item.Published,
@@ -35,4 +38,21 @@ func ParseRSSByPageIndex(index int) []models.Post {
 	}
 
 	return posts
+}
+
+func setBlankToLinks(str string) string {
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(str))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	doc.Find("a").SetAttr("target", "_blank")
+
+	output, err := doc.Html()
+
+	if err != nil {
+		panic(err)
+	}
+
+	return output
 }
